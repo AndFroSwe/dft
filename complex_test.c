@@ -12,9 +12,13 @@ int main(int argc, char *argv[])
     printf("Generating signal\n");
 
     // Get signal samples
-    double signal[4];
-    for (int i = 0; i < 4; ++i) {
-        double t = (double)i/4;
+    int N = 4; // Number of samples
+    double T = 3.0/4; // Sampling period
+
+    printf("Number of samples: %d\n", N);
+    double signal[N];
+    for (int i = 0; i < N; ++i) {
+        double t = (double)i*2*PI/N/T;
         signal[i] = generate_signal(t);
         printf("Signal at t = %0.2f: %0.2f\n", t, signal[i]);
     }
@@ -22,10 +26,11 @@ int main(int argc, char *argv[])
 
     // Calculate DFT
     printf("Calculating DFT\n");
-    complex dft[4];
-    for (int n = 0; n < 4; ++n) {
-        for (int N = 0; N < 4; ++N) {
-            dft[n] += signal[N]*cexp(-I*PI/2.0*n*N);
+    complex dft[N];
+    for (int n = 0; n < N; ++n) {
+        dft[n] = 0;
+        for (int k = 0; k < 4; ++k) {
+            dft[n] += signal[k]*cexp(-I*PI/2.0*n*k);
         }
         printf("F[%d] = %f\n", n, cabs(dft[n]));
     }
