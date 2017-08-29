@@ -12,14 +12,17 @@ int main(int argc, char *argv[])
     printf("Generating signal\n");
 
     // Get signal samples
-    int N = 9; // Number of samples
-    /*double Ts = 0.75; // Sampling period*/
-    double Ts = 1.5; // Sampling period, s
-    double ts = Ts/(N - 1); // Time between samples, s
+    // Parameters
+    int N = 512; // Number of samples
+    double fs = 250; // Sample rate [Hz]
+
+    // Calculated parameters
+    double ts = 1/fs; // Sample time, [s]
+    double T0 = N*ts; // Fundamental period [s]
 
     printf("Number of samples: %d\n", N);
-    printf("Sampling period: %0.2f s\n", Ts);
-    printf("Sampling rate: %0.2f Hz\n", 1/ts);
+    printf("Fundamental period: %0.2f s\n", T0);
+    printf("Sampling rate: %0.2f Hz\n", fs);
     printf("Sampling time: %0.2f s\n", ts);
     printf("------------------------------------------------\n");
 
@@ -32,21 +35,26 @@ int main(int argc, char *argv[])
 
     // Calculate DFT
     printf("Calculating DFT\n");
+    printf("------------------------------------------------\n");
     complex dft[N];
     for (int n = 0; n < N; ++n) {
         dft[n] = 0;
         for (int k = 0; k < N; ++k) {
             dft[n] += signal[k]*cexp(-I*2*PI/N*n*k);
         }
-        printf("F[%d] = %f\n", n, cabs(dft[n])/N);
+        if (n == 0) {
+            printf("F[%0.2f Hz] = %f\n", fs/N*n, cabs(dft[n])/N);
+        } else if (fs/N*n < fs/2){
+            printf("F[%0.2f Hz] = %f\n", fs/N*n, 2*cabs(dft[n])/N);
+        }
     }
-
-
+    printf("------------------------------------------------\n");
 
     return 0;
 }
 
 double generate_signal(double t)
 {
-    return 5 + 2*cos(2*PI*t - PI/2) + 3*cos(4*PI*t);
+    /*return 5 + 2*cos(2*PI*t - PI/2) + 3*cos(4*PI*t);*/
+    return 21 + 2*cos(2.5*2*PI*t - PI/2) + 5*sin(0.25*4*PI*t) + 30*cos(120*2*PI*t);
 }
