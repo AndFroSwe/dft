@@ -35,6 +35,7 @@ void free_sample_data(sample_data *sd)
 
 void add_data(sample_data *sd, double d)
 {
+    // Add data to circular buffer
     *sd->data_end = d; // Add data
     (sd->data_end)++; // Increase index of buffer
     // Check if buffer filled
@@ -47,10 +48,14 @@ void add_data(sample_data *sd, double d)
 
 void print_data(const sample_data *sd)
 {
+    double *p = sd->data_end;
     printf("{");
-    for (int i = 0; i < sd->size; ++i) {
-        printf("%0.2f ", sd->buffer[i]);
-    }
+    do {
+        printf("%0.2f ", *(--p));
+        if (p == sd->buffer) {
+            p = sd->buffer_end;
+        }
+    } while(p != sd->data_end);
     printf("}\n");
 }
 
@@ -63,12 +68,13 @@ int main(int argc, char *argv[])
     init_sample_data(sd, s, 1);
     printf("Size: %d \n", sd->size);
     printf("Add\n");
-    for (int i = 0; i < s; ++i) {
+    for (int i = 0; i < s + 100; ++i) {
         add_data(sd, i);
     }
 
     print_data(sd);
-    /*free_sample_data(sd);*/
+    free_sample_data(sd);
+    free(sd);
 
 
     return 0;
