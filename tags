@@ -1,0 +1,27 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CC	makefile	/^CC = gcc$/;"	m
+INC	makefile	/^INC = -lm$/;"	m
+PI	complex_test.c	5;"	d	file:
+PI	dft.c	11;"	d	file:
+STD	makefile	/^STD = -std=c11$/;"	m
+add_data	dft.c	/^void add_data(sample_data *sd, double d)$/;"	f
+buffer	dft.c	/^    double *buffer;     \/\/ Start of data buffer$/;"	m	struct:sample_data	file:
+buffer_end	dft.c	/^    double *buffer_end; \/\/ End of data buffer$/;"	m	struct:sample_data	file:
+calculate_dft	dft.c	/^void calculate_dft(sample_data *sd, complex *result)$/;"	f
+data_end	dft.c	/^    double *data_end;   \/\/ End of ring buffer$/;"	m	struct:sample_data	file:
+free_sample_data	dft.c	/^void free_sample_data(sample_data *sd)$/;"	f
+fs	dft.c	/^    unsigned int fs;    \/\/ Sample rate [Hz]$/;"	m	struct:sample_data	file:
+generate_signal	complex_test.c	/^double generate_signal(double t)$/;"	f
+generate_signal	dft.c	/^double generate_signal(double t)$/;"	f
+init_sample_data	dft.c	/^void init_sample_data(sample_data *sd, unsigned int size, unsigned int fs)$/;"	f
+main	complex_test.c	/^int main(int argc, char *argv[])$/;"	f
+main	dft.c	/^int main(int argc, char *argv[])$/;"	f
+print_data	dft.c	/^void print_data(const sample_data *sd)$/;"	f
+sample_data	dft.c	/^typedef struct sample_data$/;"	s	file:
+sample_data	dft.c	/^} sample_data;$/;"	t	typeref:struct:sample_data	file:
+size	dft.c	/^    unsigned int size;  \/\/ Size of data buffer (number of samples)$/;"	m	struct:sample_data	file:
